@@ -1,58 +1,43 @@
 #
-# Copyright (c) 2019-2021 P3TERX <https://p3terx.com>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-#
-# https://github.com/P3TERX/Actions-OpenWrt
-# File: .github/workflows/update-checker.yml
-# Description: Source code update checker
+# This is free software, lisence use MIT.
+# 
+# Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
+# 
+# <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: Update Checker
-
-env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+name: Merge-upstream
 
 on:
-  workflow_dispatch:
-#  schedule:
-#    - cron: 0 */18 * * *
+  push:
+    branches: 
+      - master
+  schedule:
+    - cron: 30 19 * * *
 
 jobs:
-  check:
+  merge:
+
     runs-on: ubuntu-latest
 
     steps:
 
-    - name: Get Commit Hash
-      id: getHash
-      run: |
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
-        echo "::set-output name=commitHash::$(git rev-parse HEAD)"
-
-    - name: Compare Commit Hash
-      id: cacheHash
-      uses: actions/cache@v2
+    - name: Checkout
+      uses: actions/checkout@master
       with:
-        path: .commitHash
-        key: HEAD-${{ steps.getHash.outputs.commitHash }}
+        ref: master
+        fetch-depth: 0
+        lfs: true
 
-    - name: Save New Commit Hash
-      if: steps.cacheHash.outputs.cache-hit != 'true'
-      run: |
-        echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
+    - name: Set git identity
+      run : |
+        git config --global user.email "KFER.Mercer@gmail.com"
+        git config --global user.name "KFERMercer"
 
-    - name: Trigger build
-      if: steps.cacheHash.outputs.cache-hit != 'true'
-      uses: peter-evans/repository-dispatch@v1
-      with:
-        token: ${{ secrets.ACTIONS_TRIGGER_PAT }}
-        event-type: Source Code Update
+    - name: Load upstream commits
+      run: git pull https://github.com/coolsnowwolf/lede.git --no-edit --strategy-option ours
 
-    - name: Delete workflow runs
-      uses: GitRML/delete-workflow-runs@main
-      with:
-        retain_days: 1
-        keep_minimum_runs: 1
+    - name: Push Commits
+      env:
+        DOWNSTREAM_BRANCH: master
+      run: git push origin $DOWNSTREAM_BRANCH
