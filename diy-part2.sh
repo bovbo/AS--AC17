@@ -18,7 +18,7 @@ rm -rf  feeds/luci/themes/luci-theme-argon
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
 
 # 更新
- ./scripts/feeds update -a && ./scripts/feeds install -a
+#  ./scripts/feeds update -a && ./scripts/feeds install -a
 
 
 
