@@ -148,8 +148,8 @@ jobs:
         rm -rf sha256sums
         rm -rf version.buildinfo
         sleep 2
-        mv *.bin 5-ACRH17-$(date +%Y.%m.%d-%H.%M).bin
-        mv *.trx 5-ACRH17-$(date +%Y.%m.%d-%H.%M).trx
+        mv *.bin MY-ACRH17-$(date +%Y.%m.%d-%H.%M).bin
+        mv *.trx MY-ACRH17-$(date +%Y.%m.%d-%H.%M).trx
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
@@ -166,8 +166,8 @@ jobs:
       run: |
         time=$(date +%Y.%m.%d)
         Rtime=$(date +%Y.%m.%d-%H:%M)
-        release_tag="rt-acrh17-t5-OpenWrt-$time"
-        release_name="rt-acrh17-t5-OpenWrt-$Rtime"
+        release_tag="rt-acrh17-OpenWrt-$time"
+        release_name="rt-acrh17-OpenWrt-$Rtime"
         echo "默认网关：192.168.8.1
         默认用户名|密码：root | root88" >> release.txt
         echo "release_name=$release_name" >> $GITHUB_OUTPUT
