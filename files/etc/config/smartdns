@@ -1,0 +1,150 @@
+
+config smartdns
+	option port '53'
+	option tcp_server '1'
+	option ipv6_server '1'
+	option bind_device '1'
+	option serve_expired '1'
+	option cache_persist '1'
+	option resolve_local_hostnames '1'
+	option seconddns_tcp_server '1'
+	option speed_check_mode 'ping,tcp:443,tcp:80'
+	option response_mode 'fastest-ip'
+	option cache_size '10000'
+	option force_https_soa '0'
+	option seconddns_server_group 'gw'
+	option seconddns_no_speed_check '1'
+	option seconddns_no_rule_nameserver '1'
+	option seconddns_no_dualstack_selection '1'
+	option seconddns_port '5335'
+	option seconddns_no_rule_soa '1'
+	option dualstack_ip_selection '1'
+	option server_name 'OpenWrt88'
+	option auto_set_dnsmasq '0'
+	option seconddns_no_cache '1'
+	option rr_ttl '86400'
+	option rr_ttl_min '360'
+	option rr_ttl_max '86400'
+	option rr_ttl_reply_max '10'
+	option old_port '53'
+	option old_enabled '0'
+	option old_auto_set_dnsmasq '0'
+
+config domain-rule
+	option server_group 'gw'
+	option no_speed_check '1'
+
+config server
+	option ip 'https://1.12.12.12/dns-query'
+	option type 'https'
+	option blacklist_ip '0'
+	option no_check_certificate '0'
+	option enabled '1'
+	option name 'cn默认'
+	option exclude_default_group '0'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option ip '202.103.225.68'
+	option name 'cn'
+	option server_group 'cn'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+
+config server
+	option enabled '1'
+	option ip 'https://cn-south.iqiqzz.com/cdn'
+	option type 'https'
+	option name 'cn'
+	option server_group 'cn'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+	option no_check_certificate '0'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option ip '223.5.5.5'
+	option name 'cn'
+	option server_group 'cn'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option ip '119.29.29.29'
+	option name 'cn'
+	option server_group 'cn'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option ip '180.76.76.76'
+	option name 'cn'
+	option server_group 'cn'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+
+config server
+	option enabled '1'
+	option ip 'https://doh.apad.pro/dns-query'
+	option type 'https'
+	option name 'gw'
+	option server_group 'gw'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+	option no_check_certificate '0'
+
+config server
+	option enabled '1'
+	option ip 'https://dns.google/dns-query'
+	option type 'https'
+	option name 'gw'
+	option server_group 'gw'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+	option no_check_certificate '0'
+
+config server
+	option enabled '1'
+	option ip 'https://doh.opendns.com/dns-query'
+	option type 'https'
+	option name 'gw'
+	option server_group 'gw'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+	option no_check_certificate '0'
+
+config server
+	option enabled '1'
+	option name 'gw'
+	option server_group 'gw'
+	option exclude_default_group '1'
+	option blacklist_ip '0'
+	option no_check_certificate '0'
+	option ip 'https://8.8.4.4/dns-query'
+	option type 'https'
+
+config server
+	option enabled '1'
+	option blacklist_ip '0'
+	option name 'gw默认'
+	option ip 'https://8.8.8.8/dns-query'
+	option type 'https'
+	option exclude_default_group '0'
+	option no_check_certificate '0'
+
+config server
+	option enabled '1'
+	option blacklist_ip '0'
+	option no_check_certificate '0'
+	option ip 'https://1.0.0.1/dns-query'
+	option name 'gw'
+	option type 'https'
+	option server_group 'gw'
+	option exclude_default_group '1'
+
