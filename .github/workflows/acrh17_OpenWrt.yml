@@ -8,7 +8,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: Build acrh17_OpenWrt
+name: acrh17_OpenWrt
 
 on:
   repository_dispatch:
