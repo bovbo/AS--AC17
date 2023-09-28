@@ -38,28 +38,28 @@ jobs:
     - name: 校验
       uses: actions/checkout@main
       
-    - name: 检查服务器配置
-      run: |
-        echo "警告⚠"
-        echo "若分配的服务器性能不足，务必及时取消，重新运行！"
-        echo "已知编译成功CPU型号：8370C,8171M"
-        echo "已知性能不足CPU型号：8272CL"
-        echo -e "-------------- ------------CPU信息------------------------------------------\n"
-        echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
-        echo -e "CPU核心及版本信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
-        echo "-------------------------------内存信息-------------------------------------------"
-        echo "已安装内存详细信息："
-        sudo lshw -short -C memory | grep GiB
-        echo -e "\n"
-        echo "-----------------------------硬盘信息---------------------------------------------"
-        echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
-        echo "硬盘详情："
-        df -Th
+   # - name: 检查服务器配置
+   #   run: |
+   #     echo "警告⚠"
+   #     echo "若分配的服务器性能不足，务必及时取消，重新运行！"
+   #     echo "已知编译成功CPU型号：8370C,8171M"
+   #     echo "已知性能不足CPU型号：8272CL"
+  #      echo -e "-------------- ------------CPU信息------------------------------------------\n"
+  #      echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
+  #      echo -e "CPU核心及版本信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+   #     echo "-------------------------------内存信息-------------------------------------------"
+   #     echo "已安装内存详细信息："
+   #     sudo lshw -short -C memory | grep GiB
+    #    echo -e "\n"
+   #     echo "-----------------------------硬盘信息---------------------------------------------"
+    #    echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
+    #    echo "硬盘详情："
+    #    df -Th
     - name: 初始化环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        docker rmi `docker images -q`
+       
         sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
         sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap* aspnetcore*
         [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
@@ -115,10 +115,10 @@ jobs:
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
-  #       chmod +x $DIY_P3_SH
+
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-  #       $GITHUB_WORKSPACE/$DIY_P3_SH
+ 
     - name: SSH连接操作
       uses: P3TERX/ssh2actions@v1.0.0
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
@@ -153,7 +153,7 @@ jobs:
     - name: 清理服务器空间
       if: steps.compile.outputs.status == 'success' && !cancelled()
       run: |
-        cd openwrt/
+        cd openwrt
         rm -rf $(ls . | grep -v "^bin$\|^tools$\|^toolchain$\|.ccache\|staging_dir\|^cache-openwrt" | xargs) 2>/dev/null
         df -hT ${PWD}
 
