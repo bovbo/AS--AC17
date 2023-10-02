@@ -29,7 +29,6 @@ jobs:
         touch ./.config
           #
           # 在 cat >> .config <<EOF 到 EOF 之间粘贴你的编译配置, 需注意缩进关系
-          # 例如:
           # 编译ASUS_RT-Acrh17的固件:
           cat >> .config <<EOF
           CONFIG_TARGET_ipq40xx=y
@@ -48,10 +47,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-filetransfer=y
           CONFIG_PACKAGE_luci-app-firewall=y
           CONFIG_PACKAGE_luci-app-mosdns=y
-          # CONFIG_PACKAGE_luci-app-upnp=y
-          # CONFIG_PACKAGE_luci-app-vlmcsd=y
           CONFIG_PACKAGE_luci-app-vssr=y
-          # CONFIG_PACKAGE_luci-app-openclash=y
           CONFIG_PACKAGE_luci-app-passwall=y
           CONFIG_PACKAGE_luci-app-turboacc=y
           CONFIG_PACKAGE_luci-app-smartdns=y
@@ -59,7 +55,6 @@ jobs:
           # 添加自定义源
           cat >> feeds.conf.default <<EOF
           src-git kenzok8 https://github.com/kenzok8/small-package.git
-          #src-git passwall https://github.com/xiaorouji/openwrt-passwall
           src-git small https://github.com/kenzok8/small.git
           EOF
           # IPv6支持:
@@ -74,15 +69,15 @@ jobs:
           CONFIG_KERNEL_BUILD_USER="ASUS_RT-Acrh17"
           CONFIG_KERNEL_BUILD_DOMAIN="Azure"
           EOF
-        #
-        # ===============================================================
-        #
+
         sed -i 's/^[ \t]*//g' ./.config
         make defconfig
   
     - name: 下载第三方软件包
       run: |
-        cd lede && make download -j16
+        cd lede
+        make defconfig
+        make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
     - name: 编译
