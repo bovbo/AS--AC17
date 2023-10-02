@@ -21,16 +21,13 @@ on:
     types: started
 
 env:
-  #REPO_URL: https://github.com/coolsnowwolf/lede
-  #REPO_BRANCH: master
-  #CONFIG_FILE: .config
-
-  #SSH_ACTIONS: false
-  #UPLOAD_BIN_DIR: false
- UPLOAD_FIRMWARE: true
- SSH_ACTIONS: false
- TZ: Asia/Shanghai
- DIY_SH: diy.sh
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  #CONFIG_FILE: .config 
+  UPLOAD_FIRMWARE: true
+  SSH_ACTIONS: false
+  TZ: Asia/Shanghai
+  DIY_SH: diy.sh
 
 
 jobs:
