@@ -1,5 +1,5 @@
 ###展示一下完整 work­flow 文件：
-name: OpenWrt-ASUS_RT-Acrh17
+name: RT-Acrh17-1
 on: push
 
 jobs:
