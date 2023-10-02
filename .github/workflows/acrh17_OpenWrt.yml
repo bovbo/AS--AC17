@@ -120,7 +120,8 @@ jobs:
           CONFIG_PACKAGE_luci-app-accesscontrol=n
           CONFIG_PACKAGE_luci-app-ddns=n
           CONFIG_PACKAGE_luci-app-filetransfer=y
-          CONFIG_PACKAGE_luci-app-unblockneteasemusic-mini=n
+          CONFIG_PACKAGE_unzip=y
+          CONFIG_PACKAGE_v2dat=y
           CONFIG_PACKAGE_luci-app-vsftpd=n
           CONFIG_PACKAGE_luci-app-vlmcsd=n
           CONFIG_PACKAGE_luci-app-zerotier=n
@@ -181,6 +182,6 @@ jobs:
       - name: 上传固件
         uses: actions/upload-artifact@master
         with:
-          name: OpenWrt firmware
+          name: acrh17_OpenWrt
           path: ./artifact/
 
