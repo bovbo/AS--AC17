@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 # 
 
-name: MY-17
+name: acrh17_OpenWrt
 
 on:
 #  push:
