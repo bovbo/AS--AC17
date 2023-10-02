@@ -1,11 +1,12 @@
 #
-# This is free software, lisence use MIT.
-# 
-# Copyright (C) 2019 P3TERX <https://p3terx.com>
-# Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
-# 
-# <https://github.com/KFERMercer/OpenWrt-CI>
-# 
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
 
 name: acrh17
 on:
@@ -19,10 +20,10 @@ on:
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+  #REPO_BRANCH: master
   #CONFIG_FILE: .config 
   UPLOAD_FIRMWARE: true
-  SSH_ACTIONS: false
+  #SSH_ACTIONS: false
   TZ: Asia/Shanghai
   DIY_SH: diy.sh
 
@@ -34,11 +35,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@main
         with:
           ref: master
 
-      - name: Initialization environment
+      - name: 初始化环境
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
@@ -73,10 +74,12 @@ jobs:
           ./scripts/feeds install -a
           
           
-      #进ssh把false,改成true    
-      - name: SSH connection to Actions
-        uses: P3TERX/debugger-action@master
-        if: env.SSH_ACTIONS == 'false'
+      - name: SSH连接到操作
+        uses: P3TERX/ssh2actions@v1.0.0
+        if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+        env:
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
 
       - name: 自定义配置文件
@@ -154,7 +157,7 @@ jobs:
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
 
-      - name: Make download
+      - name: 下载软件包
         run: |
           make download -j16
           find dl -size -1024c -exec ls -l {} \;
@@ -165,7 +168,7 @@ jobs:
           echo -e "$(nproc) thread build."
           make -j$(nproc) V=s
 
-      - name: 组织固件文件
+      - name: 整理固件文件
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
@@ -174,7 +177,7 @@ jobs:
           mv .config ./artifact/
 
       - name: 上传固件
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@main
         with:
           name: acrh17_OpenWrt
           path: ./artifact/
