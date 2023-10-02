@@ -4,7 +4,7 @@ on: push
 
 jobs:
   build:
-    name: Build ASUS_RT-Acrh17
+    name: RT-Acrh17-1
     runs-on: ubuntu-latest
     steps:
     - name: Installation depends
