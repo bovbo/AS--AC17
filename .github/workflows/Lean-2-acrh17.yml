@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build Lean acrh17
+name: Lean acrh17-2
 
 on:
   repository_dispatch:
